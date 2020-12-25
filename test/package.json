@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "test": "node test.js"
+  },
+  "devDependencies": {
+    "@linaria/core": "^3.0.0-beta.1",
+    "esbuild": "^0.8.26",
+    "puppeteer": "^5.5.0"
+  }
+}
