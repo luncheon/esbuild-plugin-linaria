@@ -3,7 +3,6 @@ import type { Preprocessor } from '@linaria/babel/types'
 import type { Plugin } from 'esbuild'
 import * as fs from 'fs'
 import * as path from 'path'
-import uuid from 'uuid/dist/v4'
 
 interface EsbuildLinariaPluginOptions {
   readonly filter?: RegExp
@@ -26,7 +25,7 @@ const plugin: EsbuildLinariaPlugin = ({ filter, preprocessor } = {}) => ({
       const sourceCode = await fs.promises.readFile(filename, 'utf8')
       let { cssText, code } = transform(sourceCode, { filename, preprocessor })
       if (cssText) {
-        const cssFilename = `${uuid()}.${name}.css`
+        const cssFilename = `${filename}.${name}.css`
         cssFileContentsMap.set(cssFilename, cssText)
         code = `import '${cssFilename}'\n${code}`
       }
