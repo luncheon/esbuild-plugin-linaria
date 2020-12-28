@@ -15,6 +15,7 @@ interface EsbuildLinariaPlugin {
 }
 
 const name = 'esbuild-plugin-linaria'
+const babelOptions = { plugins: [require('@babel/plugin-syntax-typescript')] }
 
 const plugin: EsbuildLinariaPlugin = ({ filter, preprocessor } = {}) => ({
   name,
@@ -23,7 +24,7 @@ const plugin: EsbuildLinariaPlugin = ({ filter, preprocessor } = {}) => ({
 
     build.onLoad({ filter: filter ?? /\.[jt]sx?$/ }, async ({ path: filename }) => {
       const sourceCode = await fs.promises.readFile(filename, 'utf8')
-      let { cssText, code } = transform(sourceCode, { filename, preprocessor })
+      let { cssText, code } = transform(sourceCode, { filename, preprocessor, pluginOptions: { babelOptions } })
       if (cssText) {
         const cssFilename = `${filename}.${name}.css`
         cssFileContentsMap.set(cssFilename, cssText)

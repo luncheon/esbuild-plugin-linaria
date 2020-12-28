@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.12.10",
+    "@babel/plugin-syntax-typescript": "^7.12.1",
     "@linaria/babel": "^3.0.0-beta.0",
     "@linaria/shaker": "^3.0.0-beta.1"
   },
