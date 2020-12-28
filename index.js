@@ -3,14 +3,23 @@ const babel_1 = require("@linaria/babel");
 const fs = require("fs");
 const path = require("path");
 const name = 'esbuild-plugin-linaria';
-const babelOptions = { plugins: [require('@babel/plugin-syntax-typescript')] };
 const plugin = ({ filter, preprocessor } = {}) => ({
     name,
     setup(build) {
         const cssFileContentsMap = new Map();
         build.onLoad({ filter: filter ?? /\.[jt]sx?$/ }, async ({ path: filename }) => {
             const sourceCode = await fs.promises.readFile(filename, 'utf8');
-            let { cssText, code } = babel_1.transform(sourceCode, { filename, preprocessor, pluginOptions: { babelOptions } });
+            let { cssText, code } = babel_1.transform(sourceCode, {
+                filename,
+                preprocessor,
+                pluginOptions: {
+                    babelOptions: {
+                        plugins: [
+                            ['@babel/plugin-syntax-typescript', { isTSX: filename.endsWith('x') }],
+                        ],
+                    },
+                },
+            });
             if (cssText) {
                 const cssFilename = `${filename}.${name}.css`;
                 cssFileContentsMap.set(cssFilename, cssText);

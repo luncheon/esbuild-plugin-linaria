@@ -7,6 +7,8 @@ stylis.set({ prefix: false })
 const build = () => esbuild.build({
   entryPoints: ['src/app.tsx'],
   outdir: 'dist',
+  jsxFactory: 'h',
+  jsxFragment: 'Fragment',
   bundle: true,
   minify: true,
   plugins: [linariaPlugin()],
@@ -19,8 +21,8 @@ const test = async () => {
   const browser = await puppeteer.launch({ headless: true })
   const page = await browser.newPage()
   await page.goto('file://' + path.resolve(__dirname, 'test.html'))
-  assert.strictEqual('grid', await page.evaluate(`getComputedStyle(document.body).display`))
-  assert.strictEqual('flex', await page.evaluate(`getComputedStyle(document.body, ':before').display`))
+  assert.strictEqual('grid', await page.evaluate(`getComputedStyle(document.getElementById('grid')).display`))
+  assert.strictEqual('flex', await page.evaluate(`getComputedStyle(document.getElementById('before-flex'), ':before').display`))
   await browser.close()
   console.log('success')
 }
