@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "outDir": "..",
     "declaration": true,
     "target": "es2020",
     "module": "commonjs",

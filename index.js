@@ -2,7 +2,7 @@
 const babel_1 = require("@linaria/babel");
 const fs = require("fs");
 const path = require("path");
-const name = 'esbuild-plugin-linaria';
+const name = 'esbuild-linaria';
 const plugin = ({ filter, preprocessor } = {}) => ({
     name,
     setup(build) {
