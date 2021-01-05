@@ -1,11 +1,11 @@
-# esbuild-linaria
+# esbuild-plugin-linaria
 
 An unofficial and experimental [esbuild](https://esbuild.github.io/) plugin for [Linaria](https://linaria.dev/).
 
 ## Installation
 
 ```sh
-$ npm i -D esbuild luncheon/esbuild-linaria
+$ npm i -D esbuild luncheon/esbuild-plugin-linaria
 ```
 
 ## Usage Example
@@ -14,7 +14,7 @@ $ npm i -D esbuild luncheon/esbuild-linaria
 
 ```js
 const esbuild = require('esbuild')
-const linariaPlugin = require('@luncheon/esbuild-linaria')
+const linariaPlugin = require('@luncheon/esbuild-plugin-linaria')
 
 // set stylis options as needed
 const stylis = require('stylis')

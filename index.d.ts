@@ -1,12 +1,12 @@
 import type { Preprocessor } from '@linaria/babel/types';
 import type { Plugin } from 'esbuild';
-interface EsbuildLinariaOptions {
+interface EsbuildPluginLinariaOptions {
     readonly filter?: RegExp;
     readonly preprocessor?: Preprocessor;
 }
-interface EsbuildLinaria {
-    (options?: EsbuildLinariaOptions): Plugin;
-    default: EsbuildLinaria;
+interface EsbuildPluginLinaria {
+    (options?: EsbuildPluginLinariaOptions): Plugin;
+    default: EsbuildPluginLinaria;
 }
-declare const _default: EsbuildLinaria;
+declare const _default: EsbuildPluginLinaria;
 export = _default;

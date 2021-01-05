@@ -4,19 +4,19 @@ import type { Plugin } from 'esbuild'
 import * as fs from 'fs'
 import * as path from 'path'
 
-const name = 'esbuild-linaria'
+const name = 'esbuild-plugin-linaria'
 
-interface EsbuildLinariaOptions {
+interface EsbuildPluginLinariaOptions {
   readonly filter?: RegExp
   readonly preprocessor?: Preprocessor
 }
 
-interface EsbuildLinaria {
-  (options?: EsbuildLinariaOptions): Plugin
-  default: EsbuildLinaria
+interface EsbuildPluginLinaria {
+  (options?: EsbuildPluginLinariaOptions): Plugin
+  default: EsbuildPluginLinaria
 }
 
-const plugin: EsbuildLinaria = ({ filter, preprocessor } = {}) => ({
+const plugin: EsbuildPluginLinaria = ({ filter, preprocessor } = {}) => ({
   name,
   setup(build) {
     const cssFileContentsMap = new Map<string, string>()
