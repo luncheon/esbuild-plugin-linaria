@@ -32,7 +32,4 @@ const main = async () => {
   await test()
 }
 
-main().catch(error => {
-  console.error(error)
-  process.exit(1)
-})
+main().catch(() => process.exit(1))
