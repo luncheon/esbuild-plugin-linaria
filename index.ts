@@ -1,5 +1,5 @@
 import { transform } from '@linaria/babel'
-import type { Preprocessor } from '@linaria/babel/types'
+import type { Options } from '@linaria/babel/types'
 import type { Plugin } from 'esbuild'
 import * as fs from 'fs'
 import * as path from 'path'
@@ -8,7 +8,8 @@ const name = 'esbuild-plugin-linaria'
 
 interface EsbuildPluginLinariaOptions {
   readonly filter?: RegExp
-  readonly preprocessor?: Preprocessor
+  readonly preprocessor?: Options['preprocessor']
+  readonly pluginOptions?: Options['pluginOptions']
 }
 
 interface EsbuildPluginLinaria {
@@ -16,7 +17,7 @@ interface EsbuildPluginLinaria {
   default: EsbuildPluginLinaria
 }
 
-const plugin: EsbuildPluginLinaria = ({ filter, preprocessor } = {}) => ({
+const plugin: EsbuildPluginLinaria = ({ filter, preprocessor, pluginOptions } = {}) => ({
   name,
   setup(build) {
     const cssFileContentsMap = new Map<string, string>()
@@ -27,7 +28,7 @@ const plugin: EsbuildPluginLinaria = ({ filter, preprocessor } = {}) => ({
         let { cssText, code } = transform(sourceCode, {
           filename,
           preprocessor,
-          pluginOptions: {
+          pluginOptions: pluginOptions ?? {
             babelOptions: {
               plugins: [
                 ['@babel/plugin-syntax-typescript', { isTSX: filename.endsWith('x') }],

@@ -3,7 +3,7 @@ const babel_1 = require("@linaria/babel");
 const fs = require("fs");
 const path = require("path");
 const name = 'esbuild-plugin-linaria';
-const plugin = ({ filter, preprocessor } = {}) => ({
+const plugin = ({ filter, preprocessor, pluginOptions } = {}) => ({
     name,
     setup(build) {
         const cssFileContentsMap = new Map();
@@ -13,7 +13,7 @@ const plugin = ({ filter, preprocessor } = {}) => ({
                 let { cssText, code } = babel_1.transform(sourceCode, {
                     filename,
                     preprocessor,
-                    pluginOptions: {
+                    pluginOptions: pluginOptions ?? {
                         babelOptions: {
                             plugins: [
                                 ['@babel/plugin-syntax-typescript', { isTSX: filename.endsWith('x') }],
