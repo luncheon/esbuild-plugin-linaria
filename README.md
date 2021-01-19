@@ -63,6 +63,36 @@ Then two files will be output
 .a16lghq5{display:grid}.a16lghq5::before{content:"";}
 ```
 
+## Options
+
+The following are the options for this plugin and their default values.
+
+```js
+linariaPlugin({
+  filter: /\.[jt]sx?$/,
+  preprocessor: 'stylis',
+  pluginOptions: {
+    babelOptions: {
+      plugins: [
+        ['@babel/plugin-syntax-typescript', { isTSX: filename.endsWith('x') }],
+      ],
+    },
+  },
+})
+```
+
+`filter` is the option for esbuild.  
+`preprocessor` and `pluginOptions` are the options for Linaria.
+
+See:
+
+- `filter`:  
+  https://esbuild.github.io/plugins/#filters
+- `preprocessor`:  
+  https://github.com/callstack/linaria/blob/master/docs/BUNDLERS_INTEGRATION.md#options
+- `pluginOptions`:  
+  https://github.com/callstack/linaria/blob/master/docs/CONFIGURATION.md#options
+
 ## License
 
 [WTFPL](http://www.wtfpl.net/)
