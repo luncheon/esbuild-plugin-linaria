@@ -5,7 +5,7 @@ An unofficial and experimental [esbuild](https://esbuild.github.io/) plugin for 
 ## Installation
 
 ```sh
-$ npm i -D esbuild luncheon/esbuild-plugin-linaria
+$ npm i -D esbuild @luncheon/esbuild-plugin-linaria
 ```
 
 ## Usage Example
