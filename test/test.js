@@ -11,7 +11,9 @@ const build = () => esbuild.build({
   jsxFragment: 'Fragment',
   bundle: true,
   minify: true,
-  plugins: [linariaPlugin()],
+  plugins: [linariaPlugin({
+    preprocess: code => code + ';document.body.dataset.preprocessed = "yes"'
+  })],
 })
 
 const test = async () => {
@@ -23,6 +25,7 @@ const test = async () => {
   await page.goto('file://' + path.resolve(__dirname, 'test.html'))
   assert.strictEqual('grid', await page.evaluate(`getComputedStyle(document.getElementById('grid')).display`))
   assert.strictEqual('flex', await page.evaluate(`getComputedStyle(document.getElementById('before-flex'), ':before').display`))
+  assert.strictEqual('yes', await page.evaluate(`document.body.dataset.preprocessed`))
   await browser.close()
 }
 

@@ -1,9 +1,9 @@
-import type { Options } from '@linaria/babel/types';
+import type { Options as LinariaOptions } from '@linaria/babel/types';
 import type { Plugin } from 'esbuild';
 interface EsbuildPluginLinariaOptions {
     readonly filter?: RegExp;
-    readonly preprocessor?: Options['preprocessor'];
-    readonly pluginOptions?: Options['pluginOptions'];
+    readonly preprocess?: (code: string) => string;
+    readonly linariaOptions?: LinariaOptions;
 }
 interface EsbuildPluginLinaria {
     (options?: EsbuildPluginLinariaOptions): Plugin;

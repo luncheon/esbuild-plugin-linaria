@@ -70,28 +70,27 @@ The following are the options for this plugin and their default values.
 ```js
 linariaPlugin({
   filter: /\.[jt]sx?$/,
-  preprocessor: 'stylis',
-  pluginOptions: {
-    babelOptions: {
-      plugins: [
-        presets: ['@babel/preset-react', '@babel/preset-typescript'],
-      ],
+  preprocess: code => code,
+  linariaOptions: {
+    pluginOptions: {
+      babelOptions: {
+        plugins: [
+          presets: ['@babel/preset-react', '@babel/preset-typescript'],
+        ],
+      },
     },
   },
 })
 ```
 
-`filter` is the option for esbuild.  
-`preprocessor` and `pluginOptions` are the options for Linaria.
-
-See:
-
-- `filter`:  
+- `filter` is an option for esbuild to narrow down the files to which this plugin should be applied.  
   https://esbuild.github.io/plugins/#filters
-- `preprocessor`:  
-  https://github.com/callstack/linaria/blob/master/docs/BUNDLERS_INTEGRATION.md#options
-- `pluginOptions`:  
-  https://github.com/callstack/linaria/blob/master/docs/CONFIGURATION.md#options
+- `preprocess` callback is called before the source code is transformed by Linaria.
+- `linariaOptions` is the option for Linaria.
+  - `preprocessor`  
+    https://github.com/callstack/linaria/blob/master/docs/BUNDLERS_INTEGRATION.md#options
+  - `pluginOptions`  
+    https://github.com/callstack/linaria/blob/master/docs/CONFIGURATION.md#options
 
 ## License
 

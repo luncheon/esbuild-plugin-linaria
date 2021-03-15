@@ -1,5 +1,5 @@
 import { transform } from '@linaria/babel'
-import type { Options } from '@linaria/babel/types'
+import type { Options as LinariaOptions } from '@linaria/babel/types'
 import type { Plugin } from 'esbuild'
 import * as fs from 'fs'
 import * as path from 'path'
@@ -8,8 +8,8 @@ const name = 'esbuild-plugin-linaria'
 
 interface EsbuildPluginLinariaOptions {
   readonly filter?: RegExp
-  readonly preprocessor?: Options['preprocessor']
-  readonly pluginOptions?: Options['pluginOptions']
+  readonly preprocess?: (code: string) => string
+  readonly linariaOptions?: LinariaOptions
 }
 
 interface EsbuildPluginLinaria {
@@ -17,18 +17,20 @@ interface EsbuildPluginLinaria {
   default: EsbuildPluginLinaria
 }
 
-const plugin: EsbuildPluginLinaria = ({ filter, preprocessor, pluginOptions } = {}) => ({
+const plugin: EsbuildPluginLinaria = ({ filter, preprocess, linariaOptions } = {}) => ({
   name,
   setup(build) {
     const cssFileContentsMap = new Map<string, string>()
 
     build.onLoad({ filter: filter ?? /\.[jt]sx?$/ }, async ({ path: filename }) => {
-      const sourceCode = await fs.promises.readFile(filename, 'utf8')
+      const _sourceCode = await fs.promises.readFile(filename, 'utf8')
+      const sourceCode = preprocess ? preprocess(_sourceCode) : _sourceCode
       try {
         let { cssText, code } = transform(sourceCode, {
           filename,
-          preprocessor,
-          pluginOptions: pluginOptions ?? {
+          inputSourceMap: linariaOptions?.inputSourceMap,
+          preprocessor: linariaOptions?.preprocessor,
+          pluginOptions: linariaOptions?.pluginOptions ?? {
             babelOptions: {
               presets: ['@babel/preset-react', '@babel/preset-typescript'],
             },
