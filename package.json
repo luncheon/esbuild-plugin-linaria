@@ -1,6 +1,6 @@
 {
   "name": "@luncheon/esbuild-plugin-linaria",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "An unofficial and experimental esbuild plugin for Linaria.",
   "license": "WTFPL",
   "repository": "luncheon/esbuild-plugin-linaria",
