@@ -5,7 +5,7 @@ const stylis = require('stylis')
 stylis.set({ prefix: false })
 
 const build = () => esbuild.build({
-  entryPoints: ['src/app.tsx'],
+  entryPoints: ['src/index.ts'],
   outdir: 'dist',
   jsxFactory: 'h',
   jsxFragment: 'Fragment',
@@ -24,12 +24,15 @@ const test = async () => {
   assert.strictEqual('grid', await page.evaluate(`getComputedStyle(document.getElementById('grid')).display`))
   assert.strictEqual('flex', await page.evaluate(`getComputedStyle(document.getElementById('before-flex'), ':before').display`))
   await browser.close()
-  console.log('success')
 }
 
 const main = async () => {
   await build()
   await test()
+  console.log('success')
 }
 
-main().catch(() => process.exit(1))
+main().catch(error => {
+  console.error(error)
+  process.exit(1)
+})

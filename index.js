@@ -15,9 +15,7 @@ const plugin = ({ filter, preprocessor, pluginOptions } = {}) => ({
                     preprocessor,
                     pluginOptions: pluginOptions ?? {
                         babelOptions: {
-                            plugins: [
-                                ['@babel/plugin-syntax-typescript', { isTSX: filename.endsWith('x') }],
-                            ],
+                            presets: ['@babel/preset-react', '@babel/preset-typescript'],
                         },
                     },
                 });
