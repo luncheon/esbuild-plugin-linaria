@@ -70,7 +70,7 @@ The following are the options for this plugin and their default values.
 ```js
 linariaPlugin({
   filter: /\.[jt]sx?$/,
-  preprocess: code => code,
+  preprocess: (code, args) => code,
   linariaOptions: {
     pluginOptions: {
       babelOptions: {
@@ -86,6 +86,9 @@ linariaPlugin({
 - `filter` is an option for esbuild to narrow down the files to which this plugin should be applied.  
   https://esbuild.github.io/plugins/#filters
 - `preprocess` callback is called before the source code is transformed by Linaria.
+  - The first argument `code` is the source code content.
+  - The second argument `args` is the argument passed by esbuild. `args.path` is the file path.
+  - It must return source code content string.
 - `linariaOptions` is the option for Linaria.
   - `preprocessor`  
     https://github.com/callstack/linaria/blob/master/docs/BUNDLERS_INTEGRATION.md#options

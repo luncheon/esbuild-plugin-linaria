@@ -1,6 +1,6 @@
 import { transform } from '@linaria/babel'
 import type { Options as LinariaOptions } from '@linaria/babel/types'
-import type { Plugin } from 'esbuild'
+import type { Plugin, OnLoadArgs } from 'esbuild'
 import * as fs from 'fs'
 import * as path from 'path'
 
@@ -8,7 +8,7 @@ const name = 'esbuild-plugin-linaria'
 
 interface EsbuildPluginLinariaOptions {
   readonly filter?: RegExp
-  readonly preprocess?: (code: string) => string
+  readonly preprocess?: (code: string, args: OnLoadArgs) => string
   readonly linariaOptions?: LinariaOptions
 }
 
@@ -22,12 +22,12 @@ const plugin: EsbuildPluginLinaria = ({ filter, preprocess, linariaOptions } = {
   setup(build) {
     const cssFileContentsMap = new Map<string, string>()
 
-    build.onLoad({ filter: filter ?? /\.[jt]sx?$/ }, async ({ path: filename }) => {
-      const _sourceCode = await fs.promises.readFile(filename, 'utf8')
-      const sourceCode = preprocess ? preprocess(_sourceCode) : _sourceCode
+    build.onLoad({ filter: filter ?? /\.[jt]sx?$/ }, async args => {
+      const _sourceCode = await fs.promises.readFile(args.path, 'utf8')
+      const sourceCode = preprocess ? preprocess(_sourceCode, args) : _sourceCode
       try {
         let { cssText, code } = transform(sourceCode, {
-          filename,
+          filename: args.path,
           inputSourceMap: linariaOptions?.inputSourceMap,
           preprocessor: linariaOptions?.preprocessor,
           pluginOptions: linariaOptions?.pluginOptions ?? {
@@ -37,13 +37,13 @@ const plugin: EsbuildPluginLinaria = ({ filter, preprocess, linariaOptions } = {
           },
         })
         if (cssText) {
-          const cssFilename = `${filename}.${name}.css`
+          const cssFilename = `${args.path}.${name}.css`
           cssFileContentsMap.set(cssFilename, cssText)
           code = `import '${cssFilename}'\n${code}`
         }
         return {
           contents: code,
-          loader: path.extname(filename).slice(1) as 'js' | 'jsx' | 'ts' | 'tsx',
+          loader: path.extname(args.path).slice(1) as 'js' | 'jsx' | 'ts' | 'tsx',
         }
       } catch (error) {
         return { errors: [{ text: error.message }] }

@@ -7,12 +7,12 @@ const plugin = ({ filter, preprocess, linariaOptions } = {}) => ({
     name,
     setup(build) {
         const cssFileContentsMap = new Map();
-        build.onLoad({ filter: filter ?? /\.[jt]sx?$/ }, async ({ path: filename }) => {
-            const _sourceCode = await fs.promises.readFile(filename, 'utf8');
-            const sourceCode = preprocess ? preprocess(_sourceCode) : _sourceCode;
+        build.onLoad({ filter: filter ?? /\.[jt]sx?$/ }, async (args) => {
+            const _sourceCode = await fs.promises.readFile(args.path, 'utf8');
+            const sourceCode = preprocess ? preprocess(_sourceCode, args) : _sourceCode;
             try {
                 let { cssText, code } = babel_1.transform(sourceCode, {
-                    filename,
+                    filename: args.path,
                     inputSourceMap: linariaOptions?.inputSourceMap,
                     preprocessor: linariaOptions?.preprocessor,
                     pluginOptions: linariaOptions?.pluginOptions ?? {
@@ -22,13 +22,13 @@ const plugin = ({ filter, preprocess, linariaOptions } = {}) => ({
                     },
                 });
                 if (cssText) {
-                    const cssFilename = `${filename}.${name}.css`;
+                    const cssFilename = `${args.path}.${name}.css`;
                     cssFileContentsMap.set(cssFilename, cssText);
                     code = `import '${cssFilename}'\n${code}`;
                 }
                 return {
                     contents: code,
-                    loader: path.extname(filename).slice(1),
+                    loader: path.extname(args.path).slice(1),
                 };
             }
             catch (error) {

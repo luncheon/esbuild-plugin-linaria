@@ -1,8 +1,8 @@
 import type { Options as LinariaOptions } from '@linaria/babel/types';
-import type { Plugin } from 'esbuild';
+import type { Plugin, OnLoadArgs } from 'esbuild';
 interface EsbuildPluginLinariaOptions {
     readonly filter?: RegExp;
-    readonly preprocess?: (code: string) => string;
+    readonly preprocess?: (code: string, args: OnLoadArgs) => string;
     readonly linariaOptions?: LinariaOptions;
 }
 interface EsbuildPluginLinaria {

@@ -12,7 +12,7 @@ const build = () => esbuild.build({
   bundle: true,
   minify: true,
   plugins: [linariaPlugin({
-    preprocess: code => code + ';document.body.dataset.preprocessed = "yes"'
+    preprocess: (code, args) => args.path.endsWith('/App.tsx') ? code + ';document.body.dataset.preprocessed = "yes"' : code
   })],
 })
 
