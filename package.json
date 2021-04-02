@@ -1,6 +1,6 @@
 {
   "name": "@luncheon/esbuild-plugin-linaria",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "An unofficial and experimental esbuild plugin for Linaria.",
   "license": "WTFPL",
   "repository": "luncheon/esbuild-plugin-linaria",
@@ -21,16 +21,16 @@
     "test": "cd test && npm t"
   },
   "dependencies": {
-    "@babel/core": "^7.13.10",
-    "@babel/preset-react": "^7.12.13",
+    "@babel/core": "^7.13.14",
+    "@babel/preset-react": "^7.13.13",
     "@babel/preset-typescript": "^7.13.0",
     "@linaria/babel": "^3.0.0-beta.0",
     "@linaria/shaker": "^3.0.0-beta.1"
   },
   "devDependencies": {
-    "@types/babel__core": "^7.1.12",
-    "@types/node": "^14.14.34",
-    "esbuild": "^0.9.2",
+    "@types/babel__core": "^7.1.14",
+    "@types/node": "^14.14.37",
+    "esbuild": "^0.11.2",
     "rimraf": "^3.0.2",
     "typescript": "^4.2.3"
   }

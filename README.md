@@ -95,7 +95,32 @@ linariaPlugin({
   - `pluginOptions`  
     https://github.com/callstack/linaria/blob/master/docs/CONFIGURATION.md#options
 
+## With `esbuild-plugin-pipe`
+
+If you use this plugin with [`esbuild-plugin-pipe`](https://github.com/nativew/esbuild-plugin-pipe), pass the same plugin instance to both `esbuild-plugin-pipe` and `esbuild`.
+
+```js
+import esbuild from 'esbuild'
+import pipe from 'esbuild-plugin-pipe'
+import linariaPlugin from '@luncheon/esbuild-plugin-linaria'
+
+const linaria = linariaPlugin({ filter: /^$/ })
+
+esbuild.build({
+  entryPoints: ['src/app.ts'],
+  outdir: 'dist',
+  bundle: true,
+  minify: true,
+  plugins: [
+    pipe({
+      filter: /\.[jt]sx?$/,
+      plugins: [linaria],
+    }),
+    linaria,
+  ],
+})
+```
+
 ## License
 
 [WTFPL](http://www.wtfpl.net/)
-
