@@ -1,12 +1,21 @@
 import type { Options as LinariaOptions } from '@linaria/babel/types';
-import type { Plugin, OnLoadArgs } from 'esbuild';
+import type { OnLoadArgs, OnLoadResult, Plugin, PluginBuild } from 'esbuild';
+interface EsbuildPipeableTransformArgs {
+    readonly args: OnLoadArgs;
+    readonly contents: string;
+}
+interface EsbuildPipeablePlugin extends Plugin {
+    setup: (build: PluginBuild, pipe?: {
+        transform: EsbuildPipeableTransformArgs;
+    }) => void | OnLoadResult;
+}
 interface EsbuildPluginLinariaOptions {
     readonly filter?: RegExp;
     readonly preprocess?: (code: string, args: OnLoadArgs) => string;
     readonly linariaOptions?: LinariaOptions;
 }
 interface EsbuildPluginLinaria {
-    (options?: EsbuildPluginLinariaOptions): Plugin;
+    (options?: EsbuildPluginLinariaOptions): EsbuildPipeablePlugin;
     default: EsbuildPluginLinaria;
 }
 declare const _default: EsbuildPluginLinaria;

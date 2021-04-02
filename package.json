@@ -6,7 +6,8 @@
   "repository": "luncheon/esbuild-plugin-linaria",
   "keywords": [
     "esbuild",
-    "linaria"
+    "linaria",
+    "css-in-js"
   ],
   "files": [
     "index.js",
