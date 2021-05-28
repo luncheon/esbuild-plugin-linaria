@@ -65,7 +65,7 @@ Then two files will be output
 
 ## Options
 
-The following are the options for this plugin and their default values.
+The followings are the options for this plugin and their default values.
 
 ```js
 linariaPlugin({

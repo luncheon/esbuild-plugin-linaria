@@ -21,17 +21,17 @@
     "test": "cd test && npm t"
   },
   "dependencies": {
-    "@babel/core": "^7.13.14",
+    "@babel/core": "^7.14.3",
     "@babel/preset-react": "^7.13.13",
     "@babel/preset-typescript": "^7.13.0",
     "@linaria/babel": "^3.0.0-beta.0",
-    "@linaria/shaker": "^3.0.0-beta.1"
+    "@linaria/shaker": "^3.0.0-beta.4"
   },
   "devDependencies": {
     "@types/babel__core": "^7.1.14",
-    "@types/node": "^14.14.37",
-    "esbuild": "^0.11.2",
+    "@types/node": "^14.17.1",
+    "esbuild": "^0.12.5",
     "rimraf": "^3.0.2",
-    "typescript": "^4.2.3"
+    "typescript": "^4.3.2"
   }
 }

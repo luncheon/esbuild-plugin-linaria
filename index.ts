@@ -10,7 +10,8 @@ interface EsbuildPipeableTransformArgs {
 }
 
 interface EsbuildPipeablePlugin extends Plugin {
-  setup: (build: PluginBuild, pipe?: { transform: EsbuildPipeableTransformArgs }) => void | OnLoadResult
+  setup(build: PluginBuild, pipe: { transform: EsbuildPipeableTransformArgs }): OnLoadResult
+  setup(build: PluginBuild): void
 }
 
 interface EsbuildPluginLinariaOptions {
@@ -47,7 +48,7 @@ const plugin: EsbuildPluginLinaria = ({ filter, preprocess, linariaOptions } = {
   }
   return {
     name: pluginName,
-    setup(build, pipe) {
+    setup: ((build: PluginBuild, pipe?: { transform: EsbuildPipeableTransformArgs }) => {
       if (pipe?.transform) {
         return transform(pipe.transform)
       }
@@ -63,7 +64,7 @@ const plugin: EsbuildPluginLinaria = ({ filter, preprocess, linariaOptions } = {
         const contents = cssFileContentsMap.get(path)
         return contents ? { contents, loader: 'css' } : undefined
       })
-    },
+    }) as EsbuildPipeablePlugin['setup'],
   }
 }
 

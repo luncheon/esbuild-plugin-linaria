@@ -24,7 +24,7 @@ const plugin = ({ filter, preprocess, linariaOptions } = {}) => {
     };
     return {
         name: pluginName,
-        setup(build, pipe) {
+        setup: ((build, pipe) => {
             if (pipe?.transform) {
                 return transform(pipe.transform);
             }
@@ -41,7 +41,7 @@ const plugin = ({ filter, preprocess, linariaOptions } = {}) => {
                 const contents = cssFileContentsMap.get(path);
                 return contents ? { contents, loader: 'css' } : undefined;
             });
-        },
+        }),
     };
 };
 module.exports = plugin.default = plugin;
