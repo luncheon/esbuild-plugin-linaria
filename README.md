@@ -2,6 +2,9 @@
 
 An unofficial and experimental [esbuild](https://esbuild.github.io/) plugin for [Linaria](https://linaria.dev/).
 
+> Linaria officially supports esbuild now.  
+> https://github.com/callstack/linaria/blob/master/docs/BUNDLERS_INTEGRATION.md#esbuild
+
 ## Installation
 
 ```sh
