@@ -52,7 +52,7 @@ const plugin: EsbuildPluginLinaria = ({ filter, preprocess, linariaOptions } = {
       if (pipe?.transform) {
         return transform(pipe.transform)
       }
-      build.onLoad({ filter: filter ?? /\.[jt]sx?$/ }, async args => {
+      build.onLoad({ filter: filter ?? /\.[cm]?[jt]sx?$/ }, async args => {
         try {
           return transform({ args, contents: await fs.promises.readFile(args.path, 'utf8') })
         } catch (error) {

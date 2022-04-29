@@ -72,7 +72,7 @@ The followings are the options for this plugin and their default values.
 
 ```js
 linariaPlugin({
-  filter: /\.[jt]sx?$/,
+  filter: /\.[cm]?[jt]sx?$/,
   preprocess: (code, args) => code,
   linariaOptions: {
     pluginOptions: {
