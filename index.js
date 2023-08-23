@@ -7,7 +7,7 @@ const plugin = ({ filter, preprocess, linariaOptions } = {}) => {
     const cssFileContentsMap = new Map();
     const transform = ({ args, contents }) => {
         contents = preprocess ? preprocess(contents, args) : contents;
-        let { cssText, code } = babel_1.transform(contents, {
+        let { cssText, code } = (0, babel_1.transform)(contents, {
             filename: args.path,
             inputSourceMap: linariaOptions?.inputSourceMap,
             preprocessor: linariaOptions?.preprocessor,
@@ -28,7 +28,7 @@ const plugin = ({ filter, preprocess, linariaOptions } = {}) => {
             if (pipe?.transform) {
                 return transform(pipe.transform);
             }
-            build.onLoad({ filter: filter ?? /\.[cm]?[jt]sx?$/ }, async (args) => transform({ args, contents: await promises_1.readFile(args.path, 'utf8') }));
+            build.onLoad({ filter: filter ?? /\.[cm]?[jt]sx?$/ }, async (args) => transform({ args, contents: await (0, promises_1.readFile)(args.path, 'utf8') }));
             build.onResolve({ filter: RegExp(String.raw `\.${pluginName}\.css`) }, ({ path }) => ({ path, namespace: pluginName }));
             build.onLoad({ filter: RegExp(String.raw `\.${pluginName}\.css`), namespace: pluginName }, ({ path }) => {
                 const contents = cssFileContentsMap.get(path);

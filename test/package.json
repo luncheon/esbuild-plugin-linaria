@@ -3,7 +3,7 @@
     "test": "node test.js"
   },
   "devDependencies": {
-    "preact": "^10.5.12",
-    "puppeteer": "^7.1.0"
+    "preact": "^10.17.1",
+    "puppeteer": "^21.1.0"
   }
 }

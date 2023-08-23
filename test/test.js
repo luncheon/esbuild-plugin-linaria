@@ -21,7 +21,7 @@ const test = async () => {
   const path = require('path')
   const assert = require('assert')
   const puppeteer = require('puppeteer')
-  const browser = await puppeteer.launch({ headless: true })
+  const browser = await puppeteer.launch({ headless: 'new' })
   const page = await browser.newPage()
   await page.goto('file://' + path.resolve(__dirname, 'test.html'))
   assert.strictEqual('grid', await page.evaluate(`getComputedStyle(document.getElementById('grid')).display`))

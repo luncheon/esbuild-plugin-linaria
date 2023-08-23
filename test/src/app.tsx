@@ -1,7 +1,7 @@
 /* @jsx h */
 /* @jsxFrag Fragment */
 import { css } from '@linaria/core'
-import { h, render, Fragment, JSX } from 'preact'
+import { h, Fragment, JSX } from 'preact'
 
 const Grid = ({ children }: { children?: JSX.HTMLAttributes<HTMLElement>['children'] }) => (
   <div id="grid" class={css`display: grid`}>{children}</div>

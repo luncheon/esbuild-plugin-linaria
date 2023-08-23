@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "declaration": true,
-    "target": "es2020",
+    "target": "es2022",
     "module": "commonjs",
     "moduleResolution": "node",
     "isolatedModules": true,
@@ -9,9 +9,7 @@
     "strict": true,
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "forceConsistentCasingInFileNames": true,
-    "newLine": "LF"
+    "noUnusedParameters": true
   },
   "files": ["index.ts"]
 }
