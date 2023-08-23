@@ -1,3 +1,5 @@
+/* @jsx h */
+/* @jsxFrag Fragment */
 import { css } from '@linaria/core'
 import { h, render, Fragment, JSX } from 'preact'
 

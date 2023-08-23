@@ -1,7 +1,7 @@
 "use strict";
 const babel_1 = require("@linaria/babel");
-const fs = require("fs");
-const path = require("path");
+const promises_1 = require("node:fs/promises");
+const path = require("node:path");
 const pluginName = 'esbuild-plugin-linaria';
 const plugin = ({ filter, preprocess, linariaOptions } = {}) => {
     const cssFileContentsMap = new Map();
@@ -18,7 +18,7 @@ const plugin = ({ filter, preprocess, linariaOptions } = {}) => {
         if (cssText) {
             const cssFilename = `${args.path}.${pluginName}.css`;
             cssFileContentsMap.set(cssFilename, cssText);
-            code = `import '${cssFilename}'\n${code}`;
+            code = `import '${cssFilename.replace(/\\/g, '\\\\')}';\n${code}`;
         }
         return { contents: code, loader: path.extname(args.path).slice(1) };
     };
@@ -28,14 +28,7 @@ const plugin = ({ filter, preprocess, linariaOptions } = {}) => {
             if (pipe?.transform) {
                 return transform(pipe.transform);
             }
-            build.onLoad({ filter: filter ?? /\.[cm]?[jt]sx?$/ }, async (args) => {
-                try {
-                    return transform({ args, contents: await fs.promises.readFile(args.path, 'utf8') });
-                }
-                catch (error) {
-                    return { errors: [{ text: error.message }] };
-                }
-            });
+            build.onLoad({ filter: filter ?? /\.[cm]?[jt]sx?$/ }, async (args) => transform({ args, contents: await promises_1.readFile(args.path, 'utf8') }));
             build.onResolve({ filter: RegExp(String.raw `\.${pluginName}\.css`) }, ({ path }) => ({ path, namespace: pluginName }));
             build.onLoad({ filter: RegExp(String.raw `\.${pluginName}\.css`), namespace: pluginName }, ({ path }) => {
                 const contents = cssFileContentsMap.get(path);

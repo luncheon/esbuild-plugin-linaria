@@ -1,8 +1,8 @@
 import { transform as linariaTransform } from '@linaria/babel'
 import type { Options as LinariaOptions } from '@linaria/babel/types'
 import type { OnLoadArgs, OnLoadResult, Plugin, PluginBuild } from 'esbuild'
-import * as fs from 'fs'
-import * as path from 'path'
+import { readFile } from 'node:fs/promises'
+import * as path from 'node:path'
 
 interface EsbuildPipeableTransformArgs {
   readonly args: OnLoadArgs
@@ -42,7 +42,7 @@ const plugin: EsbuildPluginLinaria = ({ filter, preprocess, linariaOptions } = {
     if (cssText) {
       const cssFilename = `${args.path}.${pluginName}.css`
       cssFileContentsMap.set(cssFilename, cssText)
-      code = `import '${cssFilename}'\n${code}`
+      code = `import '${cssFilename.replace(/\\/g, '\\\\')}';\n${code}`
     }
     return { contents: code, loader: path.extname(args.path).slice(1) as 'js' | 'jsx' | 'ts' | 'tsx' }
   }
@@ -52,13 +52,7 @@ const plugin: EsbuildPluginLinaria = ({ filter, preprocess, linariaOptions } = {
       if (pipe?.transform) {
         return transform(pipe.transform)
       }
-      build.onLoad({ filter: filter ?? /\.[cm]?[jt]sx?$/ }, async args => {
-        try {
-          return transform({ args, contents: await fs.promises.readFile(args.path, 'utf8') })
-        } catch (error) {
-          return { errors: [{ text: error.message }] }
-        }
-      })
+      build.onLoad({ filter: filter ?? /\.[cm]?[jt]sx?$/ }, async args => transform({ args, contents: await readFile(args.path, 'utf8') }))
       build.onResolve({ filter: RegExp(String.raw`\.${pluginName}\.css`) }, ({ path }) => ({ path, namespace: pluginName }))
       build.onLoad({ filter: RegExp(String.raw`\.${pluginName}\.css`), namespace: pluginName }, ({ path }) => {
         const contents = cssFileContentsMap.get(path)

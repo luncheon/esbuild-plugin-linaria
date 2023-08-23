@@ -1,3 +1,4 @@
+const { sep } = require('node:path')
 const esbuild = require('esbuild')
 const linariaPlugin = require('..')
 
@@ -12,7 +13,7 @@ const build = () => esbuild.build({
   bundle: true,
   minify: true,
   plugins: [linariaPlugin({
-    preprocess: (code, args) => args.path.endsWith('/App.tsx') ? code + ';document.body.dataset.preprocessed = "yes"' : code
+    preprocess: (code, args) => args.path.endsWith(`${sep}App.tsx`) ? code + ';document.body.dataset.preprocessed = "yes"' : code
   })],
 })
 
